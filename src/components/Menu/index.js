@@ -284,7 +284,6 @@ Menu.propTypes = {
 };
 
 const mapStateToProps = state => ({
-   currentClient: state.client.currentClient,
    loggedIn: state.user.loggedIn,
    adminLoggedIn: state.user.adminLoggedIn,
    user: state.user.data

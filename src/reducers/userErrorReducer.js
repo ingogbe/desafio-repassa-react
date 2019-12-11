@@ -13,7 +13,7 @@ export default function(state = initialState, action) {
    switch(action.type){
       case USER_LOGIN_ERROR:
          window.localStorage.clear();
-         window.location.reload();
+         //window.location.reload();
          
          return {
             ...state,
@@ -28,7 +28,7 @@ export default function(state = initialState, action) {
             error: action.payload,
             message: "Erro ao validar usúario",
             flag: true,
-            type: "error"
+            type: "validate_error"
          }
       case CHANGE_LOGIN_FLAG_ERROR:
          return {

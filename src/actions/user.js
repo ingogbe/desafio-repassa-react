@@ -15,29 +15,34 @@ export const login = (email, password, keep) => dispatch => {
    }).then(res => {
       dispatch({
          type: USER_LOGIN,
-         payload: res.data.success,
+         payload: res.data.data,
          loggedIn: true
       });
    }).catch(err => {
       dispatch({
          type: USER_LOGIN_ERROR,
-         payload: err,
+         payload: err.response ? err.response.data : (err.request || err.message),
          loggedIn: false
       });
    });
 }
 
 export const validateSession = (session) => dispatch => {
-   Axios.post(host + '/api/login/validate', session, {withCredentials: true}).then(res => {
+   Axios.get(host + '/api/validate', {
+      withCredentials: true,
+      headers: {
+         'Authorization': 'Bearer ' + session
+      }
+   }).then(res => {
       dispatch({
          type: VALIDATE_SESSION,
-         payload: res.data,
+         payload: res.data.data,
          adminLoggedIn: res.data.success ? res.data.success.admin ? res.data.success.admin : false : false
       });
    }).catch(err => {
       dispatch({
          type: VALIDATE_SESSION_ERROR,
-         payload: err
+         payload: err.response ? err.response.data : (err.request || err.message)
       });
    });
    
@@ -54,7 +59,7 @@ export const logout = () => dispatch => {
    }).catch(err => {
       dispatch({
          type: USER_LOGIN_ERROR,
-         payload: err,
+         payload: err.response ? err.response.data : (err.request || err.message),
          loggedIn: false
       });
    });

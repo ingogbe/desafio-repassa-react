@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes, { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import { connect } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,46 +13,14 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import withStyles from '@material-ui/core/styles/withStyles';
+import {withStyles, ThemeProvider} from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
 import Loader from '../../components/Loaders/Round';
-
-import { connect } from 'react-redux';
-
 import { login, validateSession } from '../../actions/user';
+import theme from '../../themes/default';
 
-const styles = theme => ({
-   main: {
-      width: 'auto',
-      display: 'block', // Fix IE 11 issue.
-      marginLeft: theme.spacing.unit * 3,
-      marginRight: theme.spacing.unit * 3,
-      [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-         width: 400,
-         marginLeft: 'auto',
-         marginRight: 'auto',
-      },
-   },
-   paper: {
-      marginTop: theme.spacing.unit * 8,
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme.spacing.unit * 3}px`,
-   },
-   avatar: {
-      margin: theme.spacing.unit,
-      backgroundColor: theme.palette.secondary.main,
-   },
-   form: {
-      width: '100%', // Fix IE 11 issue.
-      marginTop: theme.spacing.unit,
-   },
-   submit: {
-      marginTop: theme.spacing.unit * 3,
-   },
-});
+import styles from './styles';
 
 class Login extends Component {
 
@@ -99,45 +68,47 @@ class Login extends Component {
       this.setState({
          [e.target.name]: checked
       });
-
-      
    }
 
    render() {
-      const { classes, loggedIn } = this.props;
+      const { classes, loggedIn, userError } = this.props;
       const { loading } = this.state;
 
       return loggedIn ? (
          <Redirect to="/"/>
       ) : (
-         <main className={classes.main}>
-            <CssBaseline />
-            <Paper className={classes.paper}>
-               <img alt="Evah Logo" src="/images/evah.png" style={{ width: '200px', margin: '30px' }} />
-               <Typography component="h1" variant="h5">
-                  APP
-               </Typography>
-               <form onSubmit={this.login} className={classes.form}>
-                  <FormControl margin="normal" required fullWidth>
-                     <InputLabel htmlFor="email">Email</InputLabel>
-                     <Input disabled={loading} value={this.state.email} onChange={this.onChange} id="email" name="email" autoComplete="email" autoFocus />
-                  </FormControl>
-                  <FormControl margin="normal" required fullWidth>
-                     <InputLabel htmlFor="password">Senha</InputLabel>
-                     <Input disabled={loading} value={this.state.password} onChange={this.onChange} name="password" type="password" id="password" autoComplete="current-password" />
-                  </FormControl>
-                  <FormControlLabel control={
-                     <Checkbox name="keep" checked={this.state.keep} onChange={this.onChangeChecked} disabled={loading} color="primary" />
-                  } label="Lembrar-me" />
-                  <Button disabled={loading} type="submit" fullWidth variant="contained" color="primary" className={classes.submit} >
-                     Entrar
-                  </Button>
-                  <FormControl margin="normal" required fullWidth style={!loading ? {display: 'none'} : {display: 'block'}}>
-                     <Grid container direction="row" justify="center" alignItems="center"><Loader/></Grid>
-                  </FormControl>
-               </form>
-            </Paper>
-         </main>
+         <ThemeProvider theme={theme}>
+            <main className={classes.main}>
+               <CssBaseline />
+               <Paper className={classes.paper}>
+                  {/* <img alt="Repassa Logo" src="/images/logo.svg" className={classes.logo} /> */}
+                  <Typography variant="h4" gutterBottom>
+                     ratings
+                  </Typography>
+                  <form onSubmit={this.login} className={classes.form}>
+                     <FormControl margin="normal" required fullWidth>
+                        <InputLabel htmlFor="email">Email</InputLabel>
+                        <Input disabled={loading} value={this.state.email} onChange={this.onChange} id="email" name="email" autoComplete="email" autoFocus />
+                     </FormControl>
+                     <FormControl margin="normal" required fullWidth>
+                        <InputLabel htmlFor="password">Senha</InputLabel>
+                        <Input disabled={loading} value={this.state.password} onChange={this.onChange} name="password" type="password" id="password" autoComplete="current-password" />
+                     </FormControl>
+                     <FormControlLabel control={
+                        <Checkbox name="keep" checked={this.state.keep} onChange={this.onChangeChecked} disabled={loading} color="primary" />
+                     } label="Lembrar-me" />
+                     <Grid container direction="row" justify="center" alignItems="center">
+                        <Button color="primary" disabled={loading} type="submit" variant="contained" className={classes.submit} >
+                           Entrar
+                        </Button>
+                     </Grid>
+                     <FormControl margin="normal" required size="medium" style={!loading ? {display: 'none'} : {display: 'block'}}>
+                        <Grid container direction="row" justify="center" alignItems="center"><Loader/></Grid>
+                     </FormControl>
+                  </form>
+               </Paper>
+            </main>
+         </ThemeProvider>
       );
    }
 }
@@ -155,8 +126,7 @@ Login.propTypes = {
 const mapStateToProps = state => ({
    user: state.user.data,
    loggedIn: state.user.loggedIn,
-   currentClient: state.client.currentClient,
    userError: state.userError
 });
 
-export default connect(mapStateToProps, { login, validateSession })(withStyles(styles)(withCookies(Login)));
+export default connect(mapStateToProps, { login, validateSession })(withStyles(styles(theme))(withCookies(Login)));
