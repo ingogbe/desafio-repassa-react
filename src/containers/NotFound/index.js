@@ -33,8 +33,7 @@ class NotFound extends React.Component {
 }
 
 NotFound.propTypes = {
-   classes: PropTypes.object.isRequired,
-   theme: PropTypes.object.isRequired
+   classes: PropTypes.object.isRequired
 };
 
 export default withStyles(styles, { withTheme: true })(NotFound)

@@ -37,7 +37,7 @@ class PrivateRoute extends Component {
             this.props.error.flag ? (
                <Error/>
             ) : (
-               <Grid style={{height: '100%'}}container direction="row" justify="center" alignItems="center">
+               <Grid style={{height: '100vh'}} container direction="row" justify="center" alignItems="center">
                   <Loader />
                </Grid>
             ) 

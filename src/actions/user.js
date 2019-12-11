@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_LOGOUT, VALIDATE_SESSION } from './types';
+import { USER_LOGIN, USER_LOGOUT, VALIDATE_SESSION, CLEAR_USER_ERROR, CLEAR_USER } from './types';
 import { USER_LOGIN_ERROR, VALIDATE_SESSION_ERROR } from './errors';
 
 import Axios from 'axios';
@@ -6,6 +6,12 @@ import Axios from 'axios';
 import { host } from '../utils/Consts';
 
 export const login = (email, password, keep) => dispatch => {
+   dispatch({
+      type: CLEAR_USER_ERROR,
+      payload: {},
+      loggedIn: false
+   });
+
    Axios.post(host + '/api/login', {
       email: email,
       password: password,
@@ -20,6 +26,11 @@ export const login = (email, password, keep) => dispatch => {
       });
    }).catch(err => {
       dispatch({
+         type: CLEAR_USER,
+         payload: {},
+         loggedIn: false
+      });
+      dispatch({
          type: USER_LOGIN_ERROR,
          payload: err.response ? err.response.data : (err.request || err.message),
          loggedIn: false
@@ -28,6 +39,12 @@ export const login = (email, password, keep) => dispatch => {
 }
 
 export const validateSession = (session) => dispatch => {
+   dispatch({
+      type: CLEAR_USER_ERROR,
+      payload: {},
+      loggedIn: false
+   });
+
    Axios.get(host + '/api/validate', {
       withCredentials: true,
       headers: {
@@ -37,9 +54,14 @@ export const validateSession = (session) => dispatch => {
       dispatch({
          type: VALIDATE_SESSION,
          payload: res.data.data,
-         adminLoggedIn: res.data.success ? res.data.success.admin ? res.data.success.admin : false : false
+         loggedIn: true
       });
    }).catch(err => {
+      dispatch({
+         type: CLEAR_USER,
+         payload: {},
+         loggedIn: false
+      });
       dispatch({
          type: VALIDATE_SESSION_ERROR,
          payload: err.response ? err.response.data : (err.request || err.message)
@@ -49,9 +71,20 @@ export const validateSession = (session) => dispatch => {
 }
 
 export const logout = () => dispatch => {
+   dispatch({
+      type: CLEAR_USER_ERROR,
+      payload: {},
+      loggedIn: false
+   });
+
    Axios.post(host + '/api/logout', {},{
       withCredentials: true
    }).then(res => {
+      dispatch({
+         type: CLEAR_USER,
+         payload: {},
+         loggedIn: false
+      });
       dispatch({
          type: USER_LOGOUT,
          loggedIn: false

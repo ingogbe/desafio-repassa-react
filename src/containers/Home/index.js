@@ -1,64 +1,18 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
 
 // My Components
 import Menu from '../../components/Menu';
+import Ratings from '../../components/Cards/Ratings';
 
 // Material UI Components
 import { withStyles } from '@material-ui/core/styles';
 
-// Styles
-import { drawerWidth } from '../../utils/Consts';
-
-const styles = theme => ({
-   root: {
-      display: 'flex',
-   },
-   toolbar: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'flex-end',
-      padding: '0 8px',
-      ...theme.mixins.toolbar,
-   },
-   content: {
-      left: `${drawerWidth}px`,
-      flexGrow: 1,
-      padding: theme.spacing.unit * 3,
-      paddingLeft: theme.spacing.unit * 10 + 1,
-      width: `calc(100% - ${drawerWidth}px)`
-   },
-   cardName: {
-      color: "#AAA",
-      margin: 0,
-      marginRight: '5px'
-   },
-   evahChip: {
-      backgroundColor: 'rgb(0, 177, 255)',
-      color: 'rgb(255, 255, 255)',
-      borderRadius: '3px',
-      padding: 0,
-      lineHeight: '10px',
-      height: '20px',
-      fontSize: '12px'
-   },
-   mb2: {
-      marginBottom: '2rem'
-   },
-   w100: {
-      width: '100%'
-   },
-   h100: {
-      height: '100%'
-   },
-   chartContainer: {
-      position: 'relative',
-      height: '150px',
-      width: '100%'
-   }
-});
-
+import styles from './styles';
+import theme from '../../themes/default';
+import {list as listRating} from '../../actions/ratings';
 
 class Home extends React.Component {
 
@@ -68,6 +22,15 @@ class Home extends React.Component {
       this.state = {
          isMobile: window.innerWidth <= 600
       }
+   }
+
+   getCookies = (cookieName) => {
+      const { cookies } = this.props.cookies;
+      return cookies[cookieName];
+   };
+
+   componentDidMount() {
+      this.props.listRating(this.getCookies('__session'), this.props.user.id);
    }
 
    render() {
@@ -81,7 +44,7 @@ class Home extends React.Component {
             <main className={classes.content}>
                <div className={classes.toolbar} />
 
-
+               <Ratings/>
             </main>
          </div>
       );
@@ -91,14 +54,19 @@ class Home extends React.Component {
 Home.propTypes = {
    classes: PropTypes.object.isRequired,
    theme: PropTypes.object.isRequired,
-   loggedIn: PropTypes.bool.isRequired
+   cookies: instanceOf(Cookies).isRequired,
+   rating: PropTypes.object.isRequired,
+   ratingError: PropTypes.object.isRequired,
+   user: PropTypes.object.isRequired,
+   listRating: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-   loggedIn: state.user.loggedIn,
+   rating: state.rating,
+   ratingError: state.ratingError,
    user: state.user.data
 });
 
 export default connect(mapStateToProps, {
-
-})(withStyles(styles, { withTheme: true })(Home))
+   listRating 
+})(withStyles(styles(theme), { withTheme: true })(withCookies(Home)));

@@ -31,6 +31,10 @@ const styles = theme => ({
    logo: {
       width: '200px',
       margin: '30px'
+   },
+
+   mt10: {
+      marginTop: '10px'
    }
 });
 

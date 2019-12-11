@@ -72,7 +72,7 @@ class Login extends Component {
 
    render() {
       const { classes, loggedIn, userError } = this.props;
-      const { loading } = this.state;
+      const loading = (userError.flag) ? false : this.state.loading;
 
       return loggedIn ? (
          <Redirect to="/"/>
@@ -81,7 +81,7 @@ class Login extends Component {
             <main className={classes.main}>
                <CssBaseline />
                <Paper className={classes.paper}>
-                  {/* <img alt="Repassa Logo" src="/images/logo.svg" className={classes.logo} /> */}
+                  <img alt="Repassa Logo" src="/images/logo.svg" className={classes.logo} />
                   <Typography variant="h4" gutterBottom>
                      ratings
                   </Typography>
@@ -97,14 +97,24 @@ class Login extends Component {
                      <FormControlLabel control={
                         <Checkbox name="keep" checked={this.state.keep} onChange={this.onChangeChecked} disabled={loading} color="primary" />
                      } label="Lembrar-me" />
-                     <Grid container direction="row" justify="center" alignItems="center">
-                        <Button color="primary" disabled={loading} type="submit" variant="contained" className={classes.submit} >
-                           Entrar
-                        </Button>
-                     </Grid>
-                     <FormControl margin="normal" required size="medium" style={!loading ? {display: 'none'} : {display: 'block'}}>
+
+                     {loading ? (
                         <Grid container direction="row" justify="center" alignItems="center"><Loader/></Grid>
-                     </FormControl>
+                     ) : (
+                        <Grid container direction="row" justify="center" alignItems="center">
+                           <Button color="primary" disabled={loading} type="submit" variant="contained" className={classes.submit} >
+                              Entrar
+                           </Button>
+                        </Grid>
+                     )}
+
+                     {(userError.flag && userError.type === "error") ? (
+                        <Grid container direction="row" justify="center" alignItems="center" className={classes.mt10}>
+                           <Typography variant="body1" color="error" align="center" gutterBottom>
+                              {userError.message}
+                           </Typography>
+                        </Grid>
+                     ): ""}
                   </form>
                </Paper>
             </main>

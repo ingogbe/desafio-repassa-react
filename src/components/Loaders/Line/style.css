@@ -3,7 +3,7 @@
    margin-top: 20px;
    width: 100%;
    height: 6px;
-   background-color: #0d9cd6;
+   background-color: #3ACBC7;
 }
 
 .bar {
@@ -17,28 +17,28 @@
 }
 
 .bar:nth-child(1) {
-   background-color: #0d9cd6;
+   background-color: #A9A9A9;
    animation: loading 3s linear infinite;
 }
 
 .bar:nth-child(2) {
-   background-color: #ED4444;
+   background-color: #3ACBC7;
    animation: loading 3s linear 1s infinite;
 }
 
 .bar:nth-child(3) {
-   background-color: #E9B301;
+   background-color: #A9A9A9;
    animation: loading 3s linear 2s infinite;
 }
 
 .bar:nth-child(4) {
-   background-color: #1FB77A;
+   background-color: #3ACBC7;
    animation: loading 3s linear 3s infinite;
 }
 
 .bar:nth-child(5) {
-   background-color: #1C1C1C;
-   animation: loading 3s linear 4s infinite;
+   background-color: #A9A9A9;
+   animation: loading 3s linear 2s infinite;
 }
 
 @-webkit-keyframes loading {

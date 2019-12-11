@@ -1,4 +1,7 @@
-import { CHANGE_LOGIN_FLAG_ERROR, USER_LOGIN_ERROR, VALIDATE_SESSION_ERROR } from '../actions/errors';
+import { USER_LOGIN_ERROR, VALIDATE_SESSION_ERROR } from '../actions/errors';
+import { CLEAR_USER_ERROR } from '../actions/types';
+
+import Cookies from 'js-cookie';
 
 const initialState = {
    error: null,
@@ -7,36 +10,31 @@ const initialState = {
    type: ""
 }
 
-
-
 export default function(state = initialState, action) {
    switch(action.type){
+      case CLEAR_USER_ERROR:
+         return initialState;
       case USER_LOGIN_ERROR:
          window.localStorage.clear();
-         //window.location.reload();
+         Cookies.remove('__session');
          
          return {
             ...state,
             error: action.payload,
-            message: "Erro ao realizar login do usuário",
+            message: "Usuário ou senha inválidos",
             flag: true,
             type: "error"
          }
       case VALIDATE_SESSION_ERROR:
+         window.localStorage.clear();
+         Cookies.remove('__session');
+
          return {
             ...state,
             error: action.payload,
             message: "Erro ao validar usúario",
             flag: true,
             type: "validate_error"
-         }
-      case CHANGE_LOGIN_FLAG_ERROR:
-         return {
-            ...state,
-            error: action.payload,
-            message: "Erro alterar status de login do usuário",
-            flag: true,
-            type: "error"
          }
       default: 
          return state;
