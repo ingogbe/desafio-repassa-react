@@ -34,7 +34,7 @@ import styles from './styles';
 import theme from '../../../themes/default';
 
 const headCells = [
-   { id: 'name', numeric: false, disablePadding: true, label: 'Nome' },
+   { id: 'fullname', numeric: false, disablePadding: true, label: 'Nome' },
    { id: 'ratings', numeric: true, disablePadding: false, label: 'Avaliações' },
    { id: 'options', numeric: false, disablePadding: false, label: 'Opções' }
 ];
@@ -51,7 +51,7 @@ class FilterableTable extends React.Component {
          page: 0,
          dense: true,
          rowsPerPage: 5,
-         rows: []
+         rows: [],
       }
       
    }
@@ -166,6 +166,10 @@ class FilterableTable extends React.Component {
 
    deleteAccounts = () => {
       this.props.deleteFunc(this.props.session, this.state.selected);
+
+      this.setState({
+         selected: []
+      });
    }
 
    render() {
@@ -265,6 +269,7 @@ class FilterableTable extends React.Component {
                                        tabIndex={-1}
                                        key={row.id}
                                        selected={isItemSelected}
+                                       className={classes.cursorPointer}
                                     >
                                        <TableCell padding="checkbox" onClick={(event) => this.handleClick(event, row.id)}>
                                           <Checkbox

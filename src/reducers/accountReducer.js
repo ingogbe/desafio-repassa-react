@@ -1,13 +1,14 @@
 import { CREATE_ACCOUNT, GET_ACCOUNT, DELETE_ACCOUNT, BATCH_DELETE_ACCOUNT, UPDATE_ACCOUNT, LIST_EMPLOYEES_ACCOUNT, LIST_ADMINS_ACCOUNT } from '../actions/codes/types';
+import { objectFilter } from '../utils/Functions';
 
 const initialState = {
    employees: {},
    admins: {}
 }
 
-var hashAccounts = {};
-
 export default function (state = initialState, action) {
+
+   var hashAccounts = {};
 
    switch (action.type) {
       case CREATE_ACCOUNT:
@@ -60,16 +61,37 @@ export default function (state = initialState, action) {
       case BATCH_DELETE_ACCOUNT:
          var ids = action.payload.data.ids;
 
-         ids.forEach((item, index) => {
-            if(state.employees[item]){
-               delete state.employees[item];
-            }
-            if(state.admins[item]){
-               delete state.admins[item];
-            }
-         });
+         return {
+            ...state,
+            employees: objectFilter(state.employees, item => {
+               var res = false;
+               ids.forEach((s, si) => {if(item.id === s) res = true;});
+               return res;
+            }),
+            admins: objectFilter(state.admins, item => {
+               var res = false;
+               ids.forEach((s, si) => {if(item.id === s) res = true;});
+               return res;
+            })
+         }
 
-         return state;
+         
+
+         // for (var key in state.employees) {
+         //    ids.forEach((id, i) => {
+         //       if (key !== id) {
+         //          newState.employees[key] = state.employees[key];
+         //       }
+         //    })
+         // }
+
+         // for (var key in state.admins) {
+         //    ids.forEach((id, i) => {
+         //       if (key !== id) {
+         //          newState.admins[key] = state.admins[key];
+         //       }
+         //    })
+         // }
       case UPDATE_ACCOUNT:
          if(action.payload.data.role === 'admin'){
             return {

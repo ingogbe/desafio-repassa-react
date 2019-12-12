@@ -28,6 +28,9 @@ const styles = theme => ({
       top: 20,
       width: 1,
    },
+   cursorPointer: {
+      cursor: 'pointer'
+   },
    highlight:
       theme.palette.type === 'light'
          ? {

@@ -47,3 +47,15 @@ export const convertDate = (date) => {
 export const randomIntFromInterval = (min, max) => {
    return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+export const objectFilter = (obj, predicate) => {
+   var result = {}, key;
+
+   for (key in obj) {
+       if (obj.hasOwnProperty(key) && !predicate(obj[key])) {
+           result[key] = obj[key];
+       }
+   }
+
+   return result;
+};

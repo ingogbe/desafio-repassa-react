@@ -3,9 +3,14 @@ import PropTypes, { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
 
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import EditIcon from '@material-ui/icons/Edit';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+
 // My Components
 import Menu from '../../components/Menu';
 import FilterableTable from '../../components/Tables/FilterableTable';
+import FormAccount from '../../components/Modals/FormAccount';
 
 // Material UI Components
 import { withStyles } from '@material-ui/core/styles';
@@ -46,6 +51,10 @@ class Home extends React.Component {
                <div className={classes.toolbar} />
 
                <FilterableTable title="Funcionários" accounts={this.props.employees} deleteFunc={this.props.batchDelete} session={this.getCookies('__session')}/>
+            
+               <FormAccount account={this.props.user} role="employee" title="Ver conta" type="view" icon={VisibilityIcon}/>
+               <FormAccount account={this.props.user} role="employee" title="Editar conta" type="edit" icon={EditIcon}/>
+
             </main>
          </div>
       );

@@ -1,12 +1,5 @@
 import { drawerWidth } from '../../utils/Consts';
 
-import purple from '@material-ui/core/colors/purple';
-import red from '@material-ui/core/colors/red';
-import orange from '@material-ui/core/colors/orange';
-import pink from '@material-ui/core/colors/pink';
-import green from '@material-ui/core/colors/green';
-import blue from '@material-ui/core/colors/blue';
-
 const styles = theme => ({
    root: {
       display: 'flex'
@@ -89,30 +82,10 @@ const styles = theme => ({
       color: theme.palette.secondary.contrastText
    },
 
-   orange: {
-      background: orange[500],
-      color: "#000000"
+   primary: {
+      background: theme.palette.primary.main,
+      color: "#FFF"
    },
-   purple: {
-      background: purple[500],
-      color: "#FFFFFF"
-   },
-   pink: {
-      background: pink[500],
-      color: "#FFFFFF"
-   },
-   green: {
-      background: green[500],
-      color: "#000000"
-   },
-   red: {
-      background: red[500],
-      color: "#FFFFFF"
-   },
-   blue: {
-      background: blue[500],
-      color: "#FFFFFF"
-   }
 });
 
 export default styles;

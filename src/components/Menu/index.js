@@ -30,24 +30,13 @@ import { logout } from '../../actions/user';
 import styles from './styles';
 import theme from '../../themes/default';
 
-// Functions
-import { randomIntFromInterval } from '../../utils/Functions';
-
 class Menu extends Component {
    constructor(props) {
       super(props);
 
       this.state = {
          open: false,
-         anchorEl: null,
-         color: this.getRandomColor([
-            this.props.classes.orange,
-            this.props.classes.purple,
-            this.props.classes.pink,
-            this.props.classes.green,
-            this.props.classes.red,
-            this.props.classes.blue,
-         ])
+         anchorEl: null
       };
       
    }
@@ -74,11 +63,6 @@ class Menu extends Component {
 
    addDefaultSrc = (ev) => {
       ev.target.src = '/images/no-photo.jpg'
-   }
-
-   getRandomColor = (colors) => {
-      var index = randomIntFromInterval(0, colors.length);
-      return colors[index];
    }
 
    getLetters = (name) => {
@@ -121,9 +105,9 @@ class Menu extends Component {
                   <Grid container direction="row" justify="flex-end" alignItems="center">
                      <IconButtonMatUI aria-owns={open ? 'menu-appbar' : undefined} aria-haspopup="true" onClick={this.handleMenu} color="inherit" >
                         {this.props.user ? (
-                           <Avatar className={this.state.color}>{this.getLetters(this.props.user.fullname)}</Avatar> 
+                           <Avatar className={classes.primary}>{this.getLetters(this.props.user.fullname)}</Avatar> 
                         ) : (
-                           <Avatar className={this.state.color}>RE</Avatar>
+                           <Avatar className={classes.primary}>RE</Avatar>
                         )}
                      </IconButtonMatUI>
                      <MenuMatUI id="menu-appbar" anchorEl={anchorEl} anchorOrigin={{ vertical: 'top', horizontal: 'right', }} transformOrigin={{ vertical: 'top', horizontal: 'right', }} open={open} onClose={this.handleClose} >
