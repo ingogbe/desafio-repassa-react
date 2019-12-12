@@ -2,14 +2,13 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { Link as RouterLink } from 'react-router-dom'
 
 // Functions
 import { isEmpty } from '../../../utils/Functions';
 
 import Loader from '../../Loaders/Line';
-import ErrorMessage from '../../ErrorMessage';
-import Rating from '../../Rating';
+import ErrorMessage from '../../Messages/ErrorMessage';
+import Rating from '../../Basic/Rating';
 import styles from './styles';
 import theme from '../../../themes/default';
 
@@ -17,11 +16,8 @@ import theme from '../../../themes/default';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 
 class Ratings extends Component {
 
@@ -42,13 +38,12 @@ class Ratings extends Component {
 							<Fragment>
 								{Object.keys(this.props.ratings[this.props.user.id]).map((item, key) => (
 									<Fragment key={key}>
-										<Grid className={classes.mb1} container direction="row" justify="space-between" alignItems="center">
+										<Grid className={classes.mb1} container direction="row" justify="center" alignItems="center">
 											<Rating 
 												from={this.props.ratings[this.props.user.id][item].from}
 												message={this.props.ratings[this.props.user.id][item].message}
 												stars={this.props.ratings[this.props.user.id][item].stars}/>
 										</Grid>
-										<hr/>
 									</Fragment>
 								))}
 								
@@ -71,13 +66,6 @@ class Ratings extends Component {
                   )
                )}
             </CardContent>
-            <CardActions className={classes.p0}>
-               <Grid className={classes.m0} container direction="row" justify="flex-end" alignItems="flex-end">
-                  {/* <Link underline="none" component={RouterLink} to="/balance">
-                     <Button size="small">Ver Detalhes</Button>
-                  </Link> */}
-               </Grid>
-            </CardActions>
          </Card>
       );
    }

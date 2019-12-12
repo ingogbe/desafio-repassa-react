@@ -5,7 +5,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import styles from './styles';
-import theme from '../../themes/default';
+import theme from '../../../themes/default';
 
 class ErrorMessage extends Component {
    chooseClassName = (errorType, classes) => {

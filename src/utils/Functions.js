@@ -25,6 +25,16 @@ export const isEmpty = (obj) => {
    }
 }
 
+export const hashToArr = (hash) => {
+   var arr = [];
+
+   for(var prop in hash) {
+      arr.push(hash[prop]);
+   }
+
+   return arr;
+}
+
 export const convertDate = (date) => {
    var stringDate = 
       date.getFullYear() + "-" + 
@@ -32,4 +42,8 @@ export const convertDate = (date) => {
       (date.getDate() > 9 ? date.getDate() : ("0" + date.getDate()));
 
    return stringDate;
+}
+
+export const randomIntFromInterval = (min, max) => {
+   return Math.floor(Math.random() * (max - min + 1) + min);
 }

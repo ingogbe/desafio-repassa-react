@@ -1,5 +1,5 @@
-import { USER_LOGIN, USER_LOGOUT, VALIDATE_SESSION, CLEAR_USER_ERROR, CLEAR_USER } from './types';
-import { USER_LOGIN_ERROR, VALIDATE_SESSION_ERROR } from './errors';
+import { USER_LOGIN, USER_LOGOUT, VALIDATE_SESSION, CLEAR_USER_ERROR, CLEAR_USER } from './codes/types';
+import { USER_LOGIN_ERROR, VALIDATE_SESSION_ERROR } from './codes/errors';
 
 import Axios from 'axios';
 

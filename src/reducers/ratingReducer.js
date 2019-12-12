@@ -1,8 +1,10 @@
-import { GET_RATING, LIST_RATING, CREATE_RATING, EXCLUDE_RATNG, UPDATE_RATING } from '../actions/types';
+import { GET_RATING, LIST_RATING, CREATE_RATING, EXCLUDE_RATNG, UPDATE_RATING } from '../actions/codes/types';
 
 const initialState = {
 	listByAccount: {}
 }
+
+var hashRatings = {}
 
 export default function(state = initialState, action) {
 
@@ -19,7 +21,7 @@ export default function(state = initialState, action) {
             }
 			}
       case LIST_RATING:
-			var hashRatings = {}
+			hashRatings = {}
 			action.payload.data.forEach((item, index) => {
 				hashRatings[item.id] = item;
 			});

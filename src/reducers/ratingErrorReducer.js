@@ -1,4 +1,4 @@
-import { GET_RATING_ERROR, LIST_RATING_ERROR, CREATE_RATING_ERROR, EXCLUDE_RATNG_ERROR, UPDATE_RATING_ERROR } from '../actions/errors';
+import { GET_RATING_ERROR, LIST_RATING_ERROR, CREATE_RATING_ERROR, EXCLUDE_RATNG_ERROR, UPDATE_RATING_ERROR } from '../actions/codes/errors';
 
 const initialState = {
    error: null,

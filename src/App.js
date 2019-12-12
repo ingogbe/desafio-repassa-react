@@ -9,6 +9,7 @@ import store from './store';
 
 import Login from './containers/Login';
 import Home from './containers/Home';
+import Admin from './containers/Admin';
 import PrivateRoute from './components/PrivateRoute';
 import RouteNotFound from './containers/NotFound';
 
@@ -23,6 +24,7 @@ class App extends Component {
             <BrowserRouter>
                <Switch>
                   <PrivateRoute exact path='/' component={Home} />
+                  <PrivateRoute exact path='/admin' component={Admin} />
                   <Route path='/login' component={Login} />
                   <Route component={RouteNotFound} />
                </Switch>

@@ -1,5 +1,5 @@
-import { USER_LOGIN_ERROR, VALIDATE_SESSION_ERROR } from '../actions/errors';
-import { CLEAR_USER_ERROR } from '../actions/types';
+import { USER_LOGIN_ERROR, VALIDATE_SESSION_ERROR } from '../actions/codes/errors';
+import { CLEAR_USER_ERROR } from '../actions/codes/types';
 
 import Cookies from 'js-cookie';
 

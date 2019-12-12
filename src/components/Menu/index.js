@@ -21,8 +21,8 @@ import ListItemTextMatUI from '@material-ui/core/ListItemText';
 import HomeMatUI from '@material-ui/icons/Home';
 import MenuItemMatUI from '@material-ui/core/MenuItem';
 import MenuMatUI from '@material-ui/core/Menu';
-import AccountCircleMatUI from '@material-ui/icons/AccountCircle';
 import SupervisorAccountMatUI from '@material-ui/icons/SupervisorAccount';
+import Avatar from '@material-ui/core/Avatar';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 
@@ -30,14 +30,26 @@ import { logout } from '../../actions/user';
 import styles from './styles';
 import theme from '../../themes/default';
 
+// Functions
+import { randomIntFromInterval } from '../../utils/Functions';
+
 class Menu extends Component {
    constructor(props) {
       super(props);
 
       this.state = {
          open: false,
-         anchorEl: null
+         anchorEl: null,
+         color: this.getRandomColor([
+            this.props.classes.orange,
+            this.props.classes.purple,
+            this.props.classes.pink,
+            this.props.classes.green,
+            this.props.classes.red,
+            this.props.classes.blue,
+         ])
       };
+      
    }
 
    handleDrawerOpen = () => {
@@ -64,6 +76,27 @@ class Menu extends Component {
       ev.target.src = '/images/no-photo.jpg'
    }
 
+   getRandomColor = (colors) => {
+      var index = randomIntFromInterval(0, colors.length);
+      return colors[index];
+   }
+
+   getLetters = (name) => {
+      if(name.length >= 2){
+         var names = name.trim().split(" ");
+         
+         if(names.length > 1){
+            return names[0].substring(0, 1).toUpperCase() + names[names.length - 1].substring(0, 1).toUpperCase();
+         }
+         else{
+            return names[0].substring(0, 2).toUpperCase();
+         }
+      }
+      else{
+         return 'RE';
+      }
+   }
+
    render() {
       const { classes, theme } = this.props;
 
@@ -88,11 +121,9 @@ class Menu extends Component {
                   <Grid container direction="row" justify="flex-end" alignItems="center">
                      <IconButtonMatUI aria-owns={open ? 'menu-appbar' : undefined} aria-haspopup="true" onClick={this.handleMenu} color="inherit" >
                         {this.props.user ? (
-                           this.props.user.image ? 
-                              <img alt="User avatar" className={classNames(classes.userImg)} src={this.props.user.image} onError={this.addDefaultSrc}/> :
-                              <AccountCircleMatUI className={classes.text}/>
+                           <Avatar className={this.state.color}>{this.getLetters(this.props.user.fullname)}</Avatar> 
                         ) : (
-                           <AccountCircleMatUI/>
+                           <Avatar className={this.state.color}>RE</Avatar>
                         )}
                      </IconButtonMatUI>
                      <MenuMatUI id="menu-appbar" anchorEl={anchorEl} anchorOrigin={{ vertical: 'top', horizontal: 'right', }} transformOrigin={{ vertical: 'top', horizontal: 'right', }} open={open} onClose={this.handleClose} >
@@ -119,7 +150,7 @@ class Menu extends Component {
                <ListMatUI>
                   <Link underline="none" component={RouterLink} to="/">
                      <ListItemMatUI selected={pathname === '/' ? true : false} button>
-                        <ListItemIconMatUI className={classes.text}><div><HomeMatUI /></div></ListItemIconMatUI>
+                        <ListItemIconMatUI ><div><HomeMatUI /></div></ListItemIconMatUI>
                         <ListItemTextMatUI className={classes.textSecondary} primary={'Home'} />
                      </ListItemMatUI>
                   </Link>
@@ -127,7 +158,7 @@ class Menu extends Component {
                   {this.props.adminLoggedIn ? 
                      <Link underline="none" component={RouterLink} to="/admin">
                         <ListItemMatUI selected={pathname === '/admin' ? true : false} button>
-                           <ListItemIconMatUI className={classes.text}><div><SupervisorAccountMatUI /></div></ListItemIconMatUI>
+                           <ListItemIconMatUI ><div><SupervisorAccountMatUI /></div></ListItemIconMatUI>
                            <ListItemTextMatUI className={classes.textSecondary} primary={'Administrador'} />
                         </ListItemMatUI>
                      </Link>

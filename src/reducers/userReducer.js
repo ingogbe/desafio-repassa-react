@@ -1,4 +1,4 @@
-import { USER_LOGIN, USER_LOGOUT, VALIDATE_SESSION, CLEAR_USER } from '../actions/types';
+import { USER_LOGIN, USER_LOGOUT, VALIDATE_SESSION, CLEAR_USER } from '../actions/codes/types';
 
 import Cookies from 'js-cookie';
 
