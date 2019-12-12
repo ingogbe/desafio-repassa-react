@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Table from '@material-ui/core/Table';
@@ -22,7 +22,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 
 
-
+import FormAccount from '../../Modals/FormAccount';
 
 
 import { withCookies } from 'react-cookie';
@@ -165,7 +165,7 @@ class FilterableTable extends React.Component {
    };
 
    deleteAccounts = () => {
-      this.props.deleteFunc(this.props.session, this.state.selected);
+      this.props.deleteFunc(this.state.selected);
 
       this.setState({
          selected: []
@@ -189,9 +189,22 @@ class FilterableTable extends React.Component {
                         {selected.length} selecionados
                      </Typography>
                   ) : (
-                        <Typography className={classes.title} variant="h6" id="tableTitle">
-                           {this.props.title ? this.props.title : "Carregando..."}
-                        </Typography>
+                        <ThemeProvider theme={theme}>
+                           <Grid container direction="row" alignItems="center">
+                              <Grid item >
+                                 <Typography className={classes.title} variant="h6" id="tableTitle">
+                                    {this.props.title ? this.props.title : "Carregando..."}
+                                 </Typography>
+                              </Grid>
+                              
+                              <Grid item >
+                                 <Grid container direction="row" alignItems="center">
+                                    <Switch color="primary" checked={dense} onChange={this.handleChangeDense} />
+                                    <Typography>Compactar</Typography>
+                                 </Grid>
+                              </Grid>
+                           </Grid>
+                        </ThemeProvider>
                      )}
 
                   {selected.length > 0 ? (
@@ -201,11 +214,7 @@ class FilterableTable extends React.Component {
                         </IconButton>
                      </Tooltip>
                   ) : (
-                        <Tooltip title="Adicionar">
-                           <IconButton aria-label="Adicionar">
-                              <PersonAddIcon />
-                           </IconButton>
-                        </Tooltip>
+                     <FormAccount role={this.props.role} title="Adicionar conta" type="create" icon={PersonAddIcon} submitFunct={this.props.createFunc}/>
                      )}
                </Toolbar>
                <div className={classes.tableWrapper}>
@@ -283,16 +292,8 @@ class FilterableTable extends React.Component {
                                        </TableCell>
                                        <TableCell align="right" onClick={(event) => this.handleClick(event, row.id)}>{row.ratings}</TableCell>
                                        <TableCell align="right">
-                                          <Tooltip title="Editar">
-                                             <IconButton aria-label="Editar" className={classes.margin0}>
-                                                <EditIcon />
-                                             </IconButton>
-                                          </Tooltip>
-                                          <Tooltip title="Ver">
-                                             <IconButton aria-label="Ver" className={classes.margin0}>
-                                                <VisibilityIcon />
-                                             </IconButton>
-                                          </Tooltip>
+                                          <FormAccount account={this.props.accounts[row.id]} role={this.props.role} title="Editar conta" type="edit" icon={EditIcon} submitFunct={this.props.editFunc}/>
+                                          <FormAccount account={this.props.accounts[row.id]} role={this.props.role} title="Ver conta" type="view" icon={VisibilityIcon}/>
                                        </TableCell>
                                     </TableRow>
                                  </ThemeProvider>
@@ -316,12 +317,7 @@ class FilterableTable extends React.Component {
                   onChangeRowsPerPage={this.handleChangeRowsPerPage}
                />
             </Paper>
-            <ThemeProvider theme={theme}>
-               <Grid container direction="row" alignItems="center">
-                  <Switch color="primary" checked={dense} onChange={this.handleChangeDense} />
-                  <Typography>Compactar</Typography>
-               </Grid>
-            </ThemeProvider>
+            
 
          </div>
       );
@@ -333,8 +329,10 @@ FilterableTable.propTypes = {
    theme: PropTypes.object.isRequired,
    accounts: PropTypes.object.isRequired,
    title: PropTypes.string.isRequired,
-   session: PropTypes.string.isRequired,
-   deleteFunc: PropTypes.func.isRequired
+   deleteFunc: PropTypes.func.isRequired,
+   createFunc: PropTypes.func.isRequired,
+   editFunc: PropTypes.func.isRequired,
+   role: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({});

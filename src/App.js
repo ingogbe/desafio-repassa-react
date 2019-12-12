@@ -12,6 +12,7 @@ import Home from './containers/Home';
 import Admin from './containers/Admin';
 import PrivateRoute from './components/PrivateRoute';
 import RouteNotFound from './containers/NotFound';
+import Notification from './components/Notification';
 
 class App extends Component {
    static propTypes = {
@@ -29,6 +30,7 @@ class App extends Component {
                   <Route component={RouteNotFound} />
                </Switch>
             </BrowserRouter>
+            <Notification/>
          </Provider>
       )
    }

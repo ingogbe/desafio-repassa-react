@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import {reducer as notifications} from 'react-notification-system-redux';
 
 import userReducer from './userReducer';
 import userErrorReducer from './userErrorReducer';
@@ -15,6 +16,7 @@ export default combineReducers({
    rating: ratingReducer,
    ratingError: ratingErrorReducer,
    account: accountReducer,
-   accountError: accountErrorReducer
+   accountError: accountErrorReducer,
+   notifications
 });
 

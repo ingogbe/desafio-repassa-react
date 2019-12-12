@@ -1,4 +1,5 @@
-import { CREATE_ACCOUNT, GET_ACCOUNT, DELETE_ACCOUNT, BATCH_DELETE_ACCOUNT, UPDATE_ACCOUNT, LIST_EMPLOYEES_ACCOUNT, LIST_ADMINS_ACCOUNT } from '../actions/codes/types';
+import { CREATE_ACCOUNT, GET_ACCOUNT, DELETE_ACCOUNT, BATCH_DELETE_ACCOUNT, UPDATE_ACCOUNT, LIST_EMPLOYEES_ACCOUNT, LIST_ADMINS_ACCOUNT, INCREMENT_ACCOUNT_RATING_COUNTER, DECREMENT_ACCOUNT_RATING_COUNTER } from '../actions/codes/types';
+
 import { objectFilter } from '../utils/Functions';
 
 const initialState = {
@@ -74,24 +75,6 @@ export default function (state = initialState, action) {
                return res;
             })
          }
-
-         
-
-         // for (var key in state.employees) {
-         //    ids.forEach((id, i) => {
-         //       if (key !== id) {
-         //          newState.employees[key] = state.employees[key];
-         //       }
-         //    })
-         // }
-
-         // for (var key in state.admins) {
-         //    ids.forEach((id, i) => {
-         //       if (key !== id) {
-         //          newState.admins[key] = state.admins[key];
-         //       }
-         //    })
-         // }
       case UPDATE_ACCOUNT:
          if(action.payload.data.role === 'admin'){
             return {
@@ -129,8 +112,64 @@ export default function (state = initialState, action) {
 
 			return {
 				...state,
-				employees: hashAccounts
-			}  
+				admins: hashAccounts
+         }  
+      case INCREMENT_ACCOUNT_RATING_COUNTER:
+         if(state.employees[action.payload.account]){
+            return {
+               ...state,
+               employees: {
+                  ...state.employees,
+                  [action.payload.account]: {
+                     ...state.employees[action.payload.account],
+                     ratings: state.employees[action.payload.account].ratings + 1
+                  }
+               }
+            } 
+         }
+         else if(state.admins[action.payload.account]){
+            return {
+               ...state,
+               admins: {
+                  ...state.admins,
+                  [action.payload.account]: {
+                     ...state.admins[action.payload.account],
+                     ratings: state.admins[action.payload.account].ratings + 1
+                  }
+               }
+            }
+         }
+         else{
+            return state;
+         }
+      case DECREMENT_ACCOUNT_RATING_COUNTER:
+         if(state.employees[action.payload.account]){
+            return {
+               ...state,
+               employees: {
+                  ...state.employees,
+                  [action.payload.account]: {
+                     ...state.employees[action.payload.account],
+                     ratings: state.employees[action.payload.account].ratings - 1
+                  }
+               }
+            } 
+         }
+         else if(state.admins[action.payload.account]){
+            return {
+               ...state,
+               admins: {
+                  ...state.admins,
+                  [action.payload.account]: {
+                     ...state.admins[action.payload.account],
+                     ratings: state.admins[action.payload.account].ratings - 1
+                  }
+               }
+            }
+         }
+         else{
+            return state;
+         }         
       default:
          return state;
    }

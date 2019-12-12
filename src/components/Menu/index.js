@@ -135,7 +135,7 @@ class Menu extends Component {
                   <Link underline="none" component={RouterLink} to="/">
                      <ListItemMatUI selected={pathname === '/' ? true : false} button>
                         <ListItemIconMatUI ><div><HomeMatUI /></div></ListItemIconMatUI>
-                        <ListItemTextMatUI className={classes.textSecondary} primary={'Home'} />
+                        <ListItemTextMatUI className={classes.textSecondary} primary={'Minhas avaliações'} />
                      </ListItemMatUI>
                   </Link>
 

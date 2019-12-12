@@ -30,7 +30,7 @@ class Home extends React.Component {
    };
 
    componentDidMount() {
-      this.props.listRating(this.getCookies('__session'), this.props.user.id);
+      this.props.listRating(this.props.user.id);
    }
 
    render() {

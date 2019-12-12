@@ -59,3 +59,12 @@ export const objectFilter = (obj, predicate) => {
 
    return result;
 };
+
+export const createNotification = (title, message) => {
+   return {
+      title: title,
+      message: message,
+      position: 'br',
+      autoDismiss: 3,
+    };
+}
