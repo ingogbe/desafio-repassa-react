@@ -262,12 +262,14 @@ class FormAccount extends Component {
                               </Grid>
                            </Fragment>
                         ) : (
+                           this.props.type === 'view' && (
                               <Grid container direction="row" justify="center" alignItems="center" className={classes.mt10}>
                                  <Typography variant="button" gutterBottom className={classes.ratings}>
                                     Não possui avaliações
                               </Typography>
                               </Grid>
-                           )}
+                           )
+                        )}
                      </Paper>
                   </Fade>
                </Modal>
