@@ -14,6 +14,9 @@ const styles = theme => ({
    margin0: {
       margin: 0
    },
+   mt10: {
+      marginTop: '10px'
+   },
    tableWrapper: {
       overflowX: 'auto',
    },
@@ -43,6 +46,7 @@ const styles = theme => ({
          },
    title: {
       flex: '1 1 100%',
+      fontWeight: 'bold'
    },
 });
 

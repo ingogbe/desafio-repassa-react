@@ -12,6 +12,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import FormHelperText from '@material-ui/core/FormHelperText';
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
@@ -56,6 +57,11 @@ class FormAccount extends Component {
             password: "",
             email: "",
             role: ""
+         },
+         formErrors: {
+            fullname: false,
+            password: false,
+            email: false
          }
       }
    }
@@ -110,11 +116,27 @@ class FormAccount extends Component {
    onChange = (e) => {
       let target = e.currentTarget;
 
+      var error = false;
+
+      if(target.name === 'email') {
+         error = target.value.match(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/) === null;
+      }
+      if(target.name === 'fullname'){
+         error = target.value.match(/^[a-zA-Z\s]{10,}$/) === null;
+      }
+      if(target.name === 'password'){
+         error = target.value.match(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#\-+=_$*()[\]%^&])[A-Za-z\d!@#\-+=_$*()[\]%^&]{8,}$/) === null;
+      }
+
       this.setState(prevState => ({
          ...prevState,
          form: {
             ...prevState.form,
             [target.name]: target.value
+         },
+         formErrors: {
+            ...prevState.formErrors,
+            [target.name]: error
          }
       }));
    }
@@ -158,7 +180,7 @@ class FormAccount extends Component {
          <Fragment>
             <ThemeProvider theme={theme}>
                <Tooltip title={this.props.title}>
-                  <IconButton aria-label={this.props.title} className={classes.margin0} onClick={this.handleOpen}>
+                  <IconButton size={this.props.buttonSize} aria-label={this.props.title} className={classes.margin0} onClick={this.handleOpen}>
                      <Icon />
                   </IconButton>
                </Tooltip>
@@ -184,9 +206,6 @@ class FormAccount extends Component {
                               </Typography>
                            </Grid>
                            <Grid item>
-                              {this.props.type === 'view' && (
-                                 <FormRating title="Avaliar" icon={RateReviewIcon} type="create" submitFunct={this.props.createRating} accountId={this.props.account.id}/>
-                              )}
                               <Typography variant="button" gutterBottom className={classes.title}>
                                  <Tooltip title="Fechar">
                                     <IconButton aria-label={this.props.title} className={classes.margin0} onClick={this.handleClose}>
@@ -198,19 +217,26 @@ class FormAccount extends Component {
                         </Grid>
 
                         <form onSubmit={this.onSubmit}>
-                           <FormControl fullWidth color="primary" margin="normal">
+                           <FormControl fullWidth color="primary" margin="dense">
                               <InputLabel htmlFor="fullname">Nome Completo</InputLabel>
-                              <Input disabled={this.props.type === 'view' ? true : false} id="fullname" name="fullname" value={this.state.form.fullname} onChange={this.onChange} />
+                              <Input error={this.state.formErrors.fullname} disabled={this.props.type === 'view' ? true : false} id="fullname" name="fullname" value={this.state.form.fullname} onChange={this.onChange} />
+                              {this.state.formErrors.fullname && (
+                                 <FormHelperText error id="fullname-helper-text">O nome deve ter pelo menos 10 caracteres</FormHelperText>
+                              )}
                            </FormControl>
-                           <FormControl fullWidth color="primary" margin="normal">
+                           <FormControl fullWidth color="primary" margin="dense">
                               <InputLabel htmlFor="email">E-Mail</InputLabel>
-                              <Input disabled={this.props.type === 'view' ? true : false} id="email" name="email" value={this.state.form.email} onChange={this.onChange} />
+                              <Input error={this.state.formErrors.email} disabled={this.props.type === 'view' ? true : false} id="email" name="email" value={this.state.form.email} onChange={this.onChange} />
+                              {this.state.formErrors.email && (
+                                 <FormHelperText error id="email-helper-text">O e-mail deve ser válido</FormHelperText>
+                              )}
                            </FormControl>
                            {this.props.type !== 'view' && (
                               <Fragment>
-                                 <FormControl fullWidth color="primary" margin="normal">
+                                 <FormControl fullWidth color="primary" margin="dense">
                                     <InputLabel htmlFor="password">Password</InputLabel>
                                     <Input
+                                       error={this.state.formErrors.password}
                                        id="password"
                                        name="password"
                                        type={this.state.showPassword ? 'text' : 'password'}
@@ -228,6 +254,9 @@ class FormAccount extends Component {
                                           </InputAdornment>
                                        }
                                     />
+                                    {this.state.formErrors.password && (
+                                       <FormHelperText error id="password-helper-text">A senha deve no mínimo 8 caracteres, e pelo menos 1 letra, 1 número e 1 caracter especial (! @ # - + = _ $ * ( ) [ ] % ^ &)</FormHelperText>
+                                    )}
                                  </FormControl>
                                  <Grid container direction="row" justify="flex-end" alignItems="center" className={classes.mt10}>
                                     <Button type="submit" variant="contained" color="primary">
@@ -237,6 +266,16 @@ class FormAccount extends Component {
                               </Fragment>
                            )}
                         </form>
+
+                        <Grid>
+                           {this.props.type === 'view' && (
+                              <Grid container direction="row" justify="center" alignItems="center" className={classes.mt10}>
+                                 <Grid item>
+                                    <FormRating title="Avaliar" icon={RateReviewIcon} type="create" submitFunct={this.props.createRating} accountId={this.props.account.id}/>
+                                 </Grid>
+                              </Grid>
+                           )}
+                        </Grid>
 
                         {hasRatings ? (
                            <Fragment>
@@ -302,7 +341,8 @@ FormAccount.propTypes = {
    createRating: PropTypes.func.isRequired,
    editRating: PropTypes.func.isRequired,
    deleteRate: PropTypes.func.isRequired,
-   rating: PropTypes.object.isRequired
+   rating: PropTypes.object.isRequired,
+   buttonSize: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Table from '@material-ui/core/Table';
@@ -185,37 +185,41 @@ class FilterableTable extends React.Component {
                   })}
                >
                   {selected.length > 0 ? (
-                     <Typography className={classes.title} color="inherit" variant="subtitle1">
-                        {selected.length} selecionados
-                     </Typography>
+                     <Fragment>
+                        <Typography className={classes.title} color="inherit" variant="subtitle1">
+                           {selected.length} selecionados
+                        </Typography>
+                        <Tooltip title="Delete">
+                           <IconButton aria-label="delete" onClick={this.deleteAccounts}>
+                              <DeleteIcon />
+                           </IconButton>
+                        </Tooltip>
+                     </Fragment>
                   ) : (
-                        <ThemeProvider theme={theme}>
-                           <Grid container direction="row" alignItems="center">
-                              <Grid item >
-                                 <Typography className={classes.title} variant="h6" id="tableTitle">
+                     <ThemeProvider theme={theme}>
+                        <Grid container direction="row" alignItems="center" className={classes.mt10}>
+                           <Grid container justify="space-between" direction="row" alignItems="center">
+                              <Grid item>
+                                 <Typography className={classes.title} variant="body1" id="tableTitle">
                                     {this.props.title ? this.props.title : "Carregando..."}
                                  </Typography>
                               </Grid>
                               
-                              <Grid item >
-                                 <Grid container direction="row" alignItems="center">
-                                    <Switch color="primary" checked={dense} onChange={this.handleChangeDense} />
-                                    <Typography>Compactar</Typography>
-                                 </Grid>
+                              <Grid item>
+                                 <FormAccount buttonSize="medium" role={this.props.role} title="Criar conta" type="create" icon={PersonAddIcon} submitFunct={this.props.createFunc}/>
                               </Grid>
                            </Grid>
-                        </ThemeProvider>
-                     )}
-
-                  {selected.length > 0 ? (
-                     <Tooltip title="Delete">
-                        <IconButton aria-label="delete" onClick={this.deleteAccounts}>
-                           <DeleteIcon />
-                        </IconButton>
-                     </Tooltip>
-                  ) : (
-                     <FormAccount role={this.props.role} title="Adicionar conta" type="create" icon={PersonAddIcon} submitFunct={this.props.createFunc}/>
-                     )}
+                           <Grid container justify="flex-start" direction="row" alignItems="center">
+                              <Grid item>
+                                 <Switch edge="start" color="primary" checked={dense} onChange={this.handleChangeDense} />
+                              </Grid>
+                              <Grid item>
+                                 <Typography>Compactar</Typography>
+                              </Grid>
+                           </Grid>
+                        </Grid>
+                     </ThemeProvider>
+                  )}
                </Toolbar>
                <div className={classes.tableWrapper}>
                   <Table
@@ -292,8 +296,8 @@ class FilterableTable extends React.Component {
                                        </TableCell>
                                        <TableCell align="right" onClick={(event) => this.handleClick(event, row.id)}>{row.ratings}</TableCell>
                                        <TableCell align="right">
-                                          <FormAccount account={this.props.accounts[row.id]} role={this.props.role} title="Editar conta" type="edit" icon={EditIcon} submitFunct={this.props.editFunc}/>
-                                          <FormAccount account={this.props.accounts[row.id]} role={this.props.role} title="Ver conta" type="view" icon={VisibilityIcon}/>
+                                          <FormAccount buttonSize="small" account={this.props.accounts[row.id]} role={this.props.role} title="Editar conta" type="edit" icon={EditIcon} submitFunct={this.props.editFunc}/>
+                                          <FormAccount buttonSize="small" account={this.props.accounts[row.id]} role={this.props.role} title="Ver conta" type="view" icon={VisibilityIcon}/>
                                        </TableCell>
                                     </TableRow>
                                  </ThemeProvider>

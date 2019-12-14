@@ -9,12 +9,11 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 // Functions
 import styles from './styles';
@@ -118,6 +117,8 @@ class FormRating extends Component {
       const { classes } = this.props;
       const Icon = this.props.icon;
 
+      console.log(this.state);
+
       return (
          <Fragment>
             <ThemeProvider theme={theme}>
@@ -160,7 +161,7 @@ class FormRating extends Component {
                         </Grid>
 
                         <form onSubmit={this.onSubmit}>
-                           <FormControl fullWidth color="primary" margin="normal">
+                           <FormControl fullWidth color="primary" margin="dense">
                               <Rating
                                  disabled={this.props.type === 'view' ? true : false}
                                  id="stars" name="stars"
@@ -168,9 +169,10 @@ class FormRating extends Component {
                                  onChange={this.onChange}
                               />
                            </FormControl>
-                           <FormControl fullWidth color="primary" margin="normal">
-                              <InputLabel htmlFor="message">Mensagem</InputLabel>
-                              <Input disabled={this.props.type === 'view' ? true : false} id="message" name="message" value={this.state.form.message} onChange={this.onChange} />
+                           <FormControl fullWidth color="primary" margin="dense">
+                              <TextareaAutosize disabled={this.props.type === 'view' ? true : false} id="message" name="message" value={this.state.form.message} onChange={this.onChange} aria-label="minimum height" rows={6} placeholder="Escreva sua avaliação aqui" />
+                              
+                              {/* <Input disabled={this.props.type === 'view' ? true : false} id="message" name="message" value={this.state.form.message} onChange={this.onChange} /> */}
                            </FormControl>
                            <Grid container direction="row" justify="flex-end" alignItems="center" className={classes.mt10}>
                               <Button type="submit" variant="contained" color="primary">
