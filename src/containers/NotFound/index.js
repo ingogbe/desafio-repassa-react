@@ -20,10 +20,14 @@ class NotFound extends React.Component {
          <ThemeProvider theme={theme}>
             <Grid container wrap="wrap" direction="row" justify="center" alignItems="center" className={classes.root}>
                <Grid item container wrap="wrap" direction="row" justify="center" alignItems="center">
-                  <img alt="Repassa Logo" src="/images/logo.svg" className={classes.logo} />
-                  <Typography variant="h4" gutterBottom>
-                     ratings
-                  </Typography>
+                  <Grid item xs={12} container justify="center">
+                     <img alt="Repassa Logo" src="/images/logo.svg" className={classes.logo} />
+                  </Grid>
+                  <Grid item xs={12} container justify="center">
+                     <Typography variant="h4" gutterBottom>
+                        ratings
+                     </Typography>
+                  </Grid>
                </Grid>
                <Grid item container wrap="wrap" direction="row" justify="center" alignItems="center">
                   <Grid item xs={12}>
