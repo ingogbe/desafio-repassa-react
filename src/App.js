@@ -13,7 +13,7 @@ import Admin from './containers/Admin';
 import Error from './components/Error';
 import PrivateRoute from './components/PrivateRoute';
 import RouteNotFound from './containers/NotFound';
-import Notification from './components/Notification';
+import Notification from './components/Basic/Notification';
 
 class App extends Component {
    static propTypes = {

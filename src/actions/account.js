@@ -3,10 +3,9 @@ import { CREATE_ACCOUNT_ERROR, GET_ACCOUNT_ERROR, BATCH_DELETE_ACCOUNT_ERROR, DE
 
 import Axios from 'axios';
 import Cookies from 'js-cookie';
-import { success, error } from 'react-notification-system-redux';
+import { success, error } from './notification';
 
 import { host } from '../utils/Consts';
-import { createNotification } from '../utils/Functions';
 
 export const create = (accountObj) => dispatch => {
    var session = Cookies.get('__session');
@@ -24,7 +23,7 @@ export const create = (accountObj) => dispatch => {
 			}
       });
       dispatch(
-         success(createNotification("Sucesso", "Conta criada com sucesso"))
+         success("Sucesso", "Conta criada com sucesso", "br", 3)
       );
    }).catch(err => {
       dispatch({
@@ -32,7 +31,7 @@ export const create = (accountObj) => dispatch => {
          payload: err.response ? err.response.data : (err.request || err.message)
       });
       dispatch(
-         error(createNotification("Erro", "Erro ao criar conta"))
+         error("Erro", "Erro ao criar conta", "br", 3)
       );
    });
 }
@@ -76,7 +75,7 @@ export const exclude = (accountId) => dispatch => {
 			}
       });
       dispatch(
-         success(createNotification("Sucesso", "Conta exclída com sucesso"))
+         success("Sucesso", "Conta excluída com sucesso", "br", 3)
       );
    }).catch(err => {
       dispatch({
@@ -84,7 +83,7 @@ export const exclude = (accountId) => dispatch => {
          payload: err.response ? err.response.data : (err.request || err.message)
       });
       dispatch(
-         error(createNotification("Erro", "Erro ao deletar conta"))
+         error("Erro", "Erro ao deletar conta", "br", 3)
       );
    });
    
@@ -106,7 +105,7 @@ export const batchDelete = (accountIds) => dispatch => {
 			}
       });
       dispatch(
-         success(createNotification("Sucesso", "Contas excluídas com sucesso"))
+         success("Sucesso", "Contas excluídas com sucesso", "br", 3)
       );
    }).catch(err => {
       dispatch({
@@ -114,7 +113,7 @@ export const batchDelete = (accountIds) => dispatch => {
          payload: err.response ? err.response.data : (err.request || err.message)
       });
       dispatch(
-         error(createNotification("Erro", "Erro ao deletar contas"))
+         error("Erro", "Erro ao deletar contas", "br", 3)
       );
    });
    
@@ -138,7 +137,7 @@ export const update = (accountId, accountObj) => dispatch => {
 			}
       });
       dispatch(
-         success(createNotification("Sucesso", "Conta atualizada com sucesso"))
+         success("Sucesso", "Conta atualizada com sucesso", "br", 3)
       );
    }).catch(err => {
       dispatch({
@@ -146,7 +145,7 @@ export const update = (accountId, accountObj) => dispatch => {
          payload: err.response ? err.response.data : (err.request || err.message)
       });
       dispatch(
-         error(createNotification("Erro", "Erro ao atualizar conta"))
+         error("Erro", "Erro ao atualizar conta", "br", 3)
       );
    });
 }
