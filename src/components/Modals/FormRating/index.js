@@ -11,8 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Rating from '@material-ui/lab/Rating';
 import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
 import CloseIcon from '@material-ui/icons/Close';
+import Grid from '@material-ui/core/Grid';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 // Functions
@@ -21,7 +21,7 @@ import theme from '../../../themes/default';
 
 // Material UI Components
 import { withStyles, ThemeProvider } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 
 class FormRating extends Component {
 

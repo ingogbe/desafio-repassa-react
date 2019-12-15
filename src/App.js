@@ -10,6 +10,7 @@ import store from './store';
 import Login from './containers/Login';
 import Home from './containers/Home';
 import Admin from './containers/Admin';
+import Error from './components/Error';
 import PrivateRoute from './components/PrivateRoute';
 import RouteNotFound from './containers/NotFound';
 import Notification from './components/Notification';
@@ -27,6 +28,7 @@ class App extends Component {
                   <PrivateRoute exact path='/' component={Home} />
                   <PrivateRoute exact path='/admin' component={Admin} />
                   <Route path='/login' component={Login} />
+                  <Route path='/error' component={Error} />
                   <Route component={RouteNotFound} />
                </Switch>
             </BrowserRouter>

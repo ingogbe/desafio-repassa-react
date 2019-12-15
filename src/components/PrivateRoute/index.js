@@ -57,7 +57,7 @@ PrivateRoute.propTypes = {
 const mapStateToProps = state => ({
    user: state.user.data,
    loggedIn: state.user.loggedIn,
-   error: state.userError
+   error: state.userError 
 });
 
 export default connect(mapStateToProps, { validateSession })(withRouter(withCookies(PrivateRoute)));

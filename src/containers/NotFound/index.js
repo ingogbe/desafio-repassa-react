@@ -2,21 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 // Material UI Components
-import { withStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import KeyboardReturnIcon from '@material-ui/icons/KeyboardReturn';
+import Button from '@material-ui/core/Button';
 
-const styles = theme => ({
-   fullScreen: {
-      height: '100%',
-      width: '100%',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      textTransform: 'uppercase',
-      fontFamily: "'Courier New', Courier, 'Lucida Sans Typewriter', 'Lucida Typewriter', monospace; font-size: 24px",
-      fontWeight: 'bold',
-      textAlign: 'center'
-   }
-});
+import { withStyles, ThemeProvider } from '@material-ui/core/styles';
+import styles from './styles';
+import theme from '../../themes/default';
 
 class NotFound extends React.Component {
 
@@ -24,10 +17,31 @@ class NotFound extends React.Component {
       const { classes } = this.props;
 
       return (
-         <div className={classes.fullScreen}>
-            404<br/><br/>
-            Página não encontrada
-         </div>
+         <ThemeProvider theme={theme}>
+            <Grid container wrap="wrap" direction="row" justify="center" alignItems="center" className={classes.root}>
+               <Grid item container wrap="wrap" direction="row" justify="center" alignItems="center">
+                  <img alt="Repassa Logo" src="/images/logo.svg" className={classes.logo} />
+                  <Typography variant="h4" gutterBottom>
+                     ratings
+                  </Typography>
+               </Grid>
+               <Grid item container wrap="wrap" direction="row" justify="center" alignItems="center">
+                  <Grid item xs={12}>
+                     <Typography variant="button" align="center" display="block" gutterBottom className={classes.title}>
+                        Página não encontrada
+                     </Typography>
+                  </Grid>
+                  <Grid item xs={12} container justify="center">
+                     <img alt="404 - Not found" src="./images/error-404.svg" className={classes.image}/>
+                  </Grid>
+               </Grid>
+               <Grid item container wrap="wrap" direction="row" justify="center" alignItems="center">
+                  <Button href="/" startIcon={<KeyboardReturnIcon/>} size="large" className={classes.button}>
+                     Voltar
+                  </Button>
+               </Grid>
+            </Grid>
+         </ThemeProvider>
       );
    }
 }
@@ -36,4 +50,4 @@ NotFound.propTypes = {
    classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles, { withTheme: true })(NotFound)
+export default withStyles(styles(theme), { withTheme: true })(NotFound)
