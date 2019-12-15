@@ -78,46 +78,48 @@ class Login extends Component {
          <Redirect to="/"/>
       ) : (
          <ThemeProvider theme={theme}>
-            <main className={classes.main}>
-               <CssBaseline />
-               <Paper className={classes.paper}>
-                  <img alt="Repassa Logo" src="/images/logo.svg" className={classes.logo} />
-                  <Typography variant="h4" gutterBottom>
-                     ratings
-                  </Typography>
-                  <form onSubmit={this.login} className={classes.form}>
-                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="email">Email</InputLabel>
-                        <Input disabled={loading} value={this.state.email} onChange={this.onChange} id="email" name="email" autoComplete="email" autoFocus />
-                     </FormControl>
-                     <FormControl margin="normal" required fullWidth>
-                        <InputLabel htmlFor="password">Senha</InputLabel>
-                        <Input disabled={loading} value={this.state.password} onChange={this.onChange} name="password" type="password" id="password" autoComplete="current-password" />
-                     </FormControl>
-                     <FormControlLabel control={
-                        <Checkbox name="keep" checked={this.state.keep} onChange={this.onChangeChecked} disabled={loading} color="primary" />
-                     } label="Lembrar-me" />
+            <Grid container wrap="wrap" direction="row" justify="center" alignItems="center" className={classes.root}>
+               <main className={classes.main}>
+                  <CssBaseline />
+                  <Paper className={classes.paper}>
+                     <img alt="Repassa Logo" src="/images/logo.svg" className={classes.logo} />
+                     <Typography variant="h4" gutterBottom>
+                        ratings
+                     </Typography>
+                     <form onSubmit={this.login} className={classes.form}>
+                        <FormControl margin="normal" required fullWidth>
+                           <InputLabel htmlFor="email">Email</InputLabel>
+                           <Input disabled={loading} value={this.state.email} onChange={this.onChange} id="email" name="email" autoComplete="email" autoFocus />
+                        </FormControl>
+                        <FormControl margin="normal" required fullWidth>
+                           <InputLabel htmlFor="password">Senha</InputLabel>
+                           <Input disabled={loading} value={this.state.password} onChange={this.onChange} name="password" type="password" id="password" autoComplete="current-password" />
+                        </FormControl>
+                        <FormControlLabel control={
+                           <Checkbox name="keep" checked={this.state.keep} onChange={this.onChangeChecked} disabled={loading} color="primary" />
+                        } label="Lembrar-me" />
 
-                     {loading ? (
-                        <Grid container direction="row" justify="center" alignItems="center"><Loader/></Grid>
-                     ) : (
-                        <Grid container direction="row" justify="center" alignItems="center">
-                           <Button color="primary" disabled={loading} type="submit" variant="contained" className={classes.submit} >
-                              Entrar
-                           </Button>
-                        </Grid>
-                     )}
+                        {loading ? (
+                           <Grid container direction="row" justify="center" alignItems="center"><Loader/></Grid>
+                        ) : (
+                           <Grid container direction="row" justify="center" alignItems="center">
+                              <Button color="primary" disabled={loading} type="submit" variant="contained" className={classes.submit} >
+                                 Entrar
+                              </Button>
+                           </Grid>
+                        )}
 
-                     {(userError.flag && userError.type === "error") ? (
-                        <Grid container direction="row" justify="center" alignItems="center" className={classes.mt10}>
-                           <Typography variant="body1" color="error" align="center" gutterBottom>
-                              {userError.message}
-                           </Typography>
-                        </Grid>
-                     ): ""}
-                  </form>
-               </Paper>
-            </main>
+                        {(userError.flag && userError.type === "error") ? (
+                           <Grid container direction="row" justify="center" alignItems="center" className={classes.mt10}>
+                              <Typography variant="body1" color="error" align="center" gutterBottom>
+                                 {userError.message}
+                              </Typography>
+                           </Grid>
+                        ): ""}
+                     </form>
+                  </Paper>
+               </main>
+            </Grid>
          </ThemeProvider>
       );
    }

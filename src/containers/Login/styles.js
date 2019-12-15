@@ -1,4 +1,7 @@
 const styles = theme => ({
+   root: {
+      height: '100vh',
+   },
    main: {
       width: 'auto',
       display: 'block', // Fix IE 11 issue.
@@ -12,7 +15,6 @@ const styles = theme => ({
    },
 
    paper: {
-      marginTop: theme.spacing(8),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
