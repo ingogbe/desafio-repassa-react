@@ -23,3 +23,4 @@
 	- Cheque se a porta utilizada por ele é a `3000` ou `5000` e está liberada pelo Firewall
 	- O mesmo vai utilizar o servidor que está online (em produção) ao invés do que está rodando localmente, portanto se o `serve` fornecer uma porta que não seja `3000` ou `5000` as requisições serão bloqueadas por CORS. Você pode expecificar a porta utulizada usando o opção `-l PORT` no comando (Ex.: `serve -s build -l 3000`).
 - Se estiver rodando a versão de desenvolvimento, cheque se a porta `3000` utilizada por ele está liberada no Firewall
+
